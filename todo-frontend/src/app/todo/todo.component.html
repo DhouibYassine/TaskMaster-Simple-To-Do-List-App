@@ -1,0 +1,43 @@
+<div class="my-5 container bg-light py-5" style="max-width: 800px; border-radius: 8px;">
+  <h2 class="text-center mb-4">Todo List</h2>
+  
+  <form (ngSubmit)="isEditing ? updateTodo() : addTodo()">
+    <div class="mb-3">
+      <input type="text" [(ngModel)]="newTodo.title" name="title" placeholder="Title" class="form-control" required>
+    </div>
+    
+    <div class="mb-3">
+      <input type="text" [(ngModel)]="newTodo.description" name="description" placeholder="Description" class="form-control">
+    </div>
+    
+    <div class="d-flex justify-content-center">
+      <button type="submit" class="btn btn-primary">{{ isEditing ? 'Update' : 'Add' }} Task</button>
+    </div>
+  </form>
+
+  <ul class="list-group mt-4">
+    <li *ngFor="let todo of todos; let i = index" class="list-group-item d-flex align-items-center mb-2" 
+        [ngClass]="{ 'bg-success': todo.completed }" 
+        style="border-radius: 8px;">
+      <div class="row w-100 align-items-center">
+        <div class="col-1 d-flex justify-content-center">
+          <input type="checkbox" [(ngModel)]="todo.completed" 
+                 (change)="toggleCompleted(i, todo.completed)" 
+                 class="form-check-input me-2">
+        </div>
+        
+        <div class="col-8">
+          <span [ngClass]="{ 'text-decoration-line-through': todo.completed }">{{ todo.title }}</span>
+          <p class="card-text mb-0 text-muted">{{ todo.description }}</p>
+        </div>
+        
+        <div class="col-3 d-flex justify-content-end">
+          <button class="btn btn-warning btn-sm" (click)="editTodo(i)">Modify</button>
+          <button class="ms-3 btn btn-danger btn-sm" (click)="deleteTodo(i)">Delete</button>
+        </div>
+      </div>
+    </li>
+  </ul>
+</div>
+
+
